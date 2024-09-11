@@ -1,14 +1,21 @@
 import pytest
-from playwright.sync_api import Page
 
-from src.pages.products import Products
-
-
-@pytest.fixture()
-def products(page: Page):
-    return Products(page)
+from src.pages.products import Products, Navigation
+from src.pages.checkout import Checkout
 
 
-def test_add_product_to_basket(base_url, products: Products):
+param = pytest.mark.parametrize
+
+
+def get_all_products():
+    pass
+
+
+@param("product_id", [1])
+def test_add_product_to_basket(
+        base_url, product_id: int, products: Products,
+        nav: Navigation, checkout: Checkout
+):
     products.visit(base_url)
-    products.add_product_to_basket(1)
+    products.add_product_to_basket(product_id)
+    nav.go_to_checkout()
