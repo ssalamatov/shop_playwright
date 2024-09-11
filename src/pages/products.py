@@ -12,7 +12,7 @@ class Products:
     def __init__(self, page: Page):
         self.page = page
         self.add_buttons = '[data-qa="product-button"]'
-        self.list_cards = '[data-qa="product-title"]'
+        self.list_titles = '[data-qa="product-title"]'
 
     def get_path(self, base_url):
         return f"{base_url}/{self.url}"
@@ -39,7 +39,7 @@ class Products:
         assert after > before
 
     def find_products(self, products: List[ProductModel]):
-        inner_texts = self.page.locator(self.list_cards).all_inner_texts()
+        inner_texts = self.page.locator(self.list_titles).all_inner_texts()
 
         titles = [p.title for p in products]
         assert titles == inner_texts

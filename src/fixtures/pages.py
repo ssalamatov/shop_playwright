@@ -1,10 +1,20 @@
 import pytest
 
+from dataclasses import dataclass
+
+
 from playwright.sync_api import Page
 
 from src.pages.products import Products
 from src.pages.navigation import Navigation
 from src.pages.checkout import Checkout
+
+
+@dataclass
+class App:
+    products: Products
+    nav: Navigation
+    checkout: Checkout
 
 
 @pytest.fixture()
@@ -20,3 +30,10 @@ def nav(page: Page):
 @pytest.fixture()
 def checkout(page: Page):
     return Checkout(page)
+
+
+@pytest.fixture()
+def app(products, nav, checkout):
+    return App(
+        products=products, nav=nav, checkout=checkout
+    )
