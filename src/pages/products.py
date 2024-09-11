@@ -1,5 +1,9 @@
 from playwright.sync_api import Page, expect
+
+from typing import List
+
 from src.pages.navigation import Navigation
+from src.models.product import ProductModel
 
 
 class Products:
@@ -8,6 +12,7 @@ class Products:
     def __init__(self, page: Page):
         self.page = page
         self.add_buttons = '[data-qa="product-button"]'
+        self.list_cards = '[data-qa="product-title"]'
 
     def get_path(self, base_url):
         return f"{base_url}/{self.url}"
@@ -32,3 +37,9 @@ class Products:
 
         after = nav.get_basket_counter()
         assert after > before
+
+    def find_products(self, products: List[ProductModel]):
+        inner_texts = self.page.locator(self.list_cards).all_inner_texts()
+
+        titles = [p.title for p in products]
+        assert titles == inner_texts

@@ -3,12 +3,15 @@ import pytest
 from src.pages.products import Products, Navigation
 from src.pages.checkout import Checkout
 
+from test.data.products import test_products
+
 
 param = pytest.mark.parametrize
 
 
-def get_all_products():
-    pass
+def test_get_all_products(base_url, products: Products):
+    products.visit(base_url)
+    products.find_products(test_products)
 
 
 @param("product_id", [1])

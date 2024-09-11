@@ -2,6 +2,6 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Product:
+class ProductModel:
     title: str
     price: str
